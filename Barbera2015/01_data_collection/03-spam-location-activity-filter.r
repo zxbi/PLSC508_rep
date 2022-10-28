@@ -10,23 +10,25 @@
 
 ### ADDITIONAL FILTERS
 
-users <- read.csv("temp/user_list_full.csv", stringsAsFactors=F)
+users <- read.csv("/Users/alex/Documents/GitHub/PLSC508_rep/dowloaded/user_list/user_list_full.csv", stringsAsFactors=F)
 
+
+lists = c('PLSC508')
 ## deleting errors in data
 users <- users[users$id_str!="",]
 todelete <- which(is.na(as.numeric(users$id_str)))
-users <- users[-todelete,]
+#users <- users[-todelete,]
 
 ## deleting users with language other than Spanish
 users <- users[users$lang=="en",]
 
 ## deleting users who haven't participated in at 
 ## least two collections
-active <- apply(users[,lists], 1, function(x) length(which(!is.na(x))))
-users <- users[active>1,] ## a total of 5.3 million users
+#active <- apply(users[,lists], 1, function(x) length(which(!is.na(x))))
+#users <- users[active>1,] ## a total of 5.3 million users
 
 ## saving to disk
-write.csv(users, file="temp/user_list_full_v2.csv", row.names=F)
+write.csv(users, file="/Users/alex/Documents/GitHub/PLSC508_rep/dowloaded/user_list/user_list_full_v2.csv", row.names=F)
 
 
 ### LOCATION INFORMATION FOR A RANDOM SAMPLE OF USERS
@@ -39,8 +41,14 @@ users$state <- NA
 
 # random sample of 200,000 users with non-empty location field
 set.seed(12345)
-rs <- sample(1:nrow(users), 200000)
+rs <- sample(1:nrow(users), 100000)
 j <- 1
+
+library(stringr)
+users$location = str_sub(users$location,2)
+
+users$location<-gsub("'","",users$location)
+
 
 for (i in rs){
 
@@ -71,8 +79,8 @@ for (i in rs){
 }
 
 ## saving to disk
-write.csv(users, file="temp/user_list_final.csv", row.names=F)
-save(users, file="temp/user_list_final.rdata")
+write.csv(users, file="/Users/alex/Documents/GitHub/PLSC508_rep/dowloaded/user_list/user_list_final.csv", row.names=F)
+save(users, file="/Users/alex/Documents/GitHub/PLSC508_rep/dowloaded/user_list/user_list_final.rdata")
 
 
 

@@ -51,11 +51,15 @@ def export_userlist(collection_name):
         outhandle.write("{0}\n".format(user_string))
 ### Now we apply the function to all our collections
 
+
+
 connection = Connection('localhost', 27011)
 
-collections = ["BostonBombing", "GunControl", "MinimumWage", 
-	"USElection", "superbowl", "MarriageEquality", "Budget", "Syria", 
-	"GovernmentShutdown", "oscars", "SOTU",	"olympics"]
+# collections = ["BostonBombing", "GunControl", "MinimumWage",
+# 	"USElection", "superbowl", "MarriageEquality", "Budget", "Syria",
+# 	"GovernmentShutdown", "oscars", "SOTU",	"olympics"]
+
+collections = ["MinimumWage"]
 
 for col in collections:
 	db = connection[col]
